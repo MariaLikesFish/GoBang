@@ -1,0 +1,1100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0036)http://zjh776.iteye.com/blog/1979748 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客</title>
+    <meta name="description" content="人工智能的期末大作业，最近几个项目都在单干。还是要养成整理的好习惯！      基于α-β剪枝算法的智能五子棋        一、基本介绍     游戏界面：使用了Java Swing进行开发，如图所示。          ">
+    <meta name="keywords" content="人工智能, AI, 五子棋, α-β剪枝 基于α-β剪枝算法的智能五子棋">
+    <link rel="shortcut icon" href="http://zjh776.iteye.com/images/favicon.ico" type="image/x-icon">
+    <link rel="search" type="application/opensearchdescription+xml" href="http://zjh776.iteye.com/open_search.xml" title="ITeye">
+    <link href="http://zjh776.iteye.com/rss" rel="alternate" title="怒减20斤" type="application/rss+xml">
+    <link href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/blue.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/hm.js"></script><script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/application.js" type="text/javascript"></script>    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?e19a8b00cf63f716d774540875007664";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+      <link href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/shCoreCommon.js" type="text/javascript"></script>
+<script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/hotkey.js" type="text/javascript"></script>
+  <script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/code_favorites.js" type="text/javascript"></script>
+<script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/weiboshare.js" type="text/javascript"></script>
+
+    
+  <style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style></head>
+  <body>
+    <div id="header">
+	      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="http://zjh776.iteye.com/blog/1979748#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">知识库</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+	      <div id="user_nav">
+  <span style="color:red;">因系统升级，暂停注册。稍后将全面支持使用CSDN帐号进行注册及登录</span>
+  
+      <a href="http://zjh776.iteye.com/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="http://zjh776.iteye.com/login">登录</a>
+  </div>
+
+	    
+    </div>
+
+    <div id="page">
+        <div id="branding" class="clearfix" style="overflow: hidden;background: none;padding:0 0 2px;">
+          <script type="text/javascript">
+            /*Iteye博客内页顶部通栏-960*90，创建于 2016-08-01*/
+            var cpro_id = "u2720131";
+          </script>
+          <script type="text/javascript" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/c.js"></script><div id="BAIDU_SSP__wrapper_u2720131_0"><iframe id="iframeu2720131_0" name="iframeu2720131_0" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/tclm.html" width="960" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0;vertical-align:bottom;margin:0;width:960px;height:90px" allowtransparency="true"></iframe></div>
+        </div>
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="http://zjh776.iteye.com/">怒减20斤</a></h1>
+        </div>
+        <div id="fd"></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class="blog_navbar_for"><a href="http://zjh776.iteye.com/"><strong>博客</strong></a></li>
+            <li><a href="http://zjh776.iteye.com/weibo">微博</a></li>
+            <li><a href="http://zjh776.iteye.com/album">相册</a></li>
+            <li><a href="http://zjh776.iteye.com/link">收藏</a></li>
+            <li><a href="http://zjh776.iteye.com/blog/guest_book">留言</a></li>
+            <li><a href="http://zjh776.iteye.com/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="http://zjh776.iteye.com/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="">
+              <input class="submit_search" type="submit" value="">
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style="display:none">
+  <a href="http://zjh776.iteye.com/" class="p-author" target="_blank">zjh776</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="http://zjh776.iteye.com/blog/1979748">基于α-β剪枝算法的智能五子棋</a>
+      <em class="actions">      </em>
+    </h3>
+    
+        <div class="news_tag"><a href="http://www.iteye.com/blogs/tag/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD">人工智能</a><a href="http://www.iteye.com/blogs/tag/AI">AI</a><a href="http://www.iteye.com/blogs/tag/%E4%BA%94%E5%AD%90%E6%A3%8B">五子棋</a><a href="http://www.iteye.com/blogs/tag/%CE%B1-%CE%B2%E5%89%AA%E6%9E%9D">α-β剪枝</a>&nbsp;</div>
+    	  
+    	
+    	
+  		
+      </div>
+
+  <div id="blog_content" class="blog_content">
+    <div class="iteye-blog-content-contain" style="font-size: 14px;">人工智能的期末大作业，最近几个项目都在单干。还是要养成整理的好习惯！</div>
+<div class="iteye-blog-content-contain" style="font-size: 14px;">&nbsp;</div>
+<div class="iteye-blog-content-contain" style="font-size: 14px;" deep="5">
+<br data-filtered="filtered"><p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="font-weight: bold; font-size: 22.0000pt; font-family: &#39;黑体&#39;;">基于α-β剪枝算法的智能五子棋</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: right;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span style="font-family: Calibri;">&nbsp;</span></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: right;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">一、基本介绍</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">游戏界面：</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">使用了</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">Java&nbsp;Swing<span style="font-family: 宋体;">进行开发，如图所示。</span></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;Calibri&#39;;"><img alt="" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/61aebe80-3742-328d-9839-20e052c8c34b.png"></span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">游戏步骤：</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>1.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">先设置游戏的参数，可以选择模式（双人、单人、双机），智能（估值函数、估值函数+搜索树），搜索树（层数、每层节点），再开始游戏；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>2.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在棋盘上单击鼠标左键，落下棋子；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>3.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在棋盘上单击鼠标右键，查看该点的估值；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>4.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">可以显示落子顺序和悔棋；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>5.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">使用搜索树AI时，控制台显示搜索过程；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>6.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">某方胜利后，游戏结束。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">二、</span><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">棋型</span><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">确定</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">问题：</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>1．</span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">五子棋棋型的定义十分模糊，如网上对活二、眠三、死四的定义经常自相矛盾。</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>2．</span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在大部分论文中，考虑的棋型非常少，如对活三的典型棋型列举不够完整，且常把眠三当死三。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">正确、完全的棋型</span><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">以上问题，令我奔溃了很久，最后对比了N个文献，才确定了比较可信的参考，</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">棋型</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">整理</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">如下：</span></p>
+<table class="bbcode" style="border-collapse: collapse; width: 568px; border-color: #000000; border-width: 1px; height: 706px; border-style: solid;">
+<tbody><tr style="height: 36.7000pt;">
+<td style="width: 59.7000pt;" width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">棋型</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">定义</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">表达式</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（1黑，2白，0空）</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">图例（来自</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><a href="http://tieba.baidu.com/p/2180847383">五子棋贴吧</a></span>）</p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">长连</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">至少五颗</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">同色棋子连在一起</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">11111</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="87" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/9230fdfaaf51f3de6bce2f4395eef01f3a2979bb.jpg" width="65"></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活四</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">有两个连五点（即有两个点可以形成五），图中白点即为连五点</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">011110</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="97" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/fcf8b48f8c5494ee125e993e2cf5e0fe99257ebb.jpg" width="65"></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">冲四</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">有一个连五点</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">011112</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">0101110</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">0110110</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="95" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/ff393a292df5e0fe7f641f265d6034a85edf72bb.jpg" width="67"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="97" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/0560f21fbe096b63624ec8770d338744ebf8ac6c.jpg" width="67">&nbsp; <img class="BDE_Image" alt="" style="cursor: , pointer;" height="90" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/406c20a4462309f71a183b35730e0cf3d7cad64c.jpg" width="63"></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活三</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">可以形成活四的三</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">01110</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">010110</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="97" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/b3175c6034a85edf66f0680448540923dd5475bb.jpg" width="67"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="87" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/db0c2834349b033bf8df6afd14ce36d3d539bd6c.jpg" width="70"></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">眠三</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">只能够形成冲四的三</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">001112</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">010112</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">011012</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">10011</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">10101</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">2011102</span></p>
+</td>
+<td width="262">
+<p>&nbsp;<img class="BDE_Image" alt="" style="cursor: , pointer;" height="97" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/bcf89c82d158ccbf9bc0231d18d8bc3eb13541bb.jpg" width="64">&nbsp; <img class="BDE_Image" alt="" style="cursor: , pointer;" height="89" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/b318b13533fa828b585f0bc4fc1f4134970a5abb.jpg" width="63">&nbsp; <img class="BDE_Image" alt="" style="cursor: , pointer;" height="109" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/3bbd033b5bb5c9eab08495c4d439b6003af3b34c.jpg" width="73"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="93" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/03158744ebf81a4cc80d7deed62a6059252da684.jpg" width="67"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="97" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/bc3febc4b74543a9cef36ceb1f178a82b80114d6.jpg" width="71"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="99" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/b7bfa9014c086e06718aae6c03087bf40ad1cb99.jpg" width="61"></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活二</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">能够形成活三的二</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">00110</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">01010</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">010010</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="101" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/5e29d9f9d72a6059b82f703d2934349b033bba84.jpg" width="74"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="99" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/85a4b9014a90f60320580a603812b31bb151edd7.jpg" width="84"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="93" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/74d20ad162d9f2d32433b5c8a8ec8a136327cc99.jpg" width="71"></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">眠二</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">能够形成眠三的二</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">000112</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">001012</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">010012</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">10001</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">2010102</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">2011002</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="103" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/3bbd033b5bb5c9eab1cc92c4d439b6003af3b384.jpg" width="78"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="99" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/5493c9ea15ce36d3733b12173bf33a87e950b184.jpg" width="67"><br data-filtered="filtered">&nbsp;<img class="BDE_Image" alt="" style="cursor: , pointer;" height="124" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/893e367adab44aed73a628c3b21c8701a08bfbd7.jpg" width="69"><img class="BDE_Image" alt="" style="cursor: , pointer;" height="126" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/21558bd4b31c8701c05e24c1267f9e2f0608ffd7.jpg" width="83">&nbsp; （图不全）</p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">死四</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">两头都被封堵的四</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;宋体&#39;;">211112</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（图缺）</span></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">死三</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">两头都被封堵的三</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;宋体&#39;;">21112</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（图缺）</span></p>
+</td>
+</tr>
+<tr>
+<td width="79">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: center;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">死二</span></p>
+</td>
+<td width="132">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">两头都被封堵的二</span></p>
+</td>
+<td width="93">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;宋体&#39;;">2112</span></p>
+</td>
+<td width="262">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（图缺）</span></p>
+</td>
+</tr>
+</tbody></table>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">棋型判断：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">由于棋型比较多，判断起来不太有规律。我就直接取出某点的横、竖、撇、捺四个方向的字串，用正则表达式判断棋型了，这样的效率应该还不错。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">例如对下图A点，如果放白子，可以在横向形成“20022</span><span style="text-decoration: underline; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">2</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">00000”活三，如果放黑子，可以在捺向形成“00001</span><span style="text-decoration: underline; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">1</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">00000”活二。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><img alt="" height="158" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/ff338dfd-67c6-3a83-bf98-0c9fcba7d210.png" width="158"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img alt="" height="155" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/88c42f30-1880-3a1c-9387-38569d2f122a.png" width="199"></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">三、落子估值方式</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">分析：</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">棋子落在哪里最好？</span></p>
+<p class="p0"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>1.<span>&nbsp;</span></span></span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">需要考虑落下后会在四个方向各形成什么棋型，是否形成组合棋型，然后进行初步打分；</span></p>
+<p class="p0"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>2.<span>&nbsp;</span></span></span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">同时还要考虑落子位置，一般同分情况下越中心的点越好；</span></p>
+<p class="p0"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>3.<span>&nbsp;</span></span></span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">可以分析对攻击效果、防守效果、综合效果。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">初步打分：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">就是</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">按照</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">威胁程度</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">给每种棋型打分</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，在理解棋型后，试验了多组估分方式，最后确定效果最好的一组打分方式如下：</span></p>
+<table class="bbcode" style="border-collapse: collapse; width: 426.1pt; border-color: #000000; border-width: 1px; border-style: solid;">
+<tbody><tr style="height: 28.1000pt;">
+<td style="width: 164.0000pt;" width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">棋型（含组合棋型）</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">分值</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">长连</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">100000</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">、双冲</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">、冲</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">3</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">10000</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">双活3</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;Courier New&#39;;">500</span><span style="color: #000000; font-size: 10.5000pt; background: #ffffff; font-family: &#39;宋体&#39;;">0</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活3眠3</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">1000</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">眠4</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">500</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活3</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">200</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">双活2</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">100</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">眠3</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">50</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活2眠2</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">10</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活2</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">5</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">眠2</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">3</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">死</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">-5</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">死</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">3</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">-5</span></p>
+</td>
+</tr>
+<tr>
+<td width="218">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">死</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">2</span></p>
+</td>
+<td width="349">
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">-5</span></p>
+</td>
+</tr>
+</tbody></table>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">再统计</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在四个方向各形成什么棋型，是否形成组合棋型，取最高分为初步打分的结果。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">落子位置：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">根据棋盘分布问题，越中心的点分值应当越高。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #7f0055; font-weight: bold; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">private</span><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">&nbsp;</span><span style="color: #7f0055; font-weight: bold; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">static</span><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">&nbsp;</span><span style="color: #7f0055; font-weight: bold; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">int</span><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">[][]&nbsp;</span><span style="color: #0000c0; font-style: italic; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">position</span><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">&nbsp;=&nbsp;{</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;5,&nbsp;5,&nbsp;5,&nbsp;5,&nbsp;4,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;6,&nbsp;6,&nbsp;6,&nbsp;5,&nbsp;4,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;6,&nbsp;7,&nbsp;6,&nbsp;5,&nbsp;4,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;6,&nbsp;6,&nbsp;6,&nbsp;5,&nbsp;4,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;5,&nbsp;5,&nbsp;5,&nbsp;5,&nbsp;4,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;4,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;3,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;2,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;0&nbsp;},</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-size: 10.5000pt; font-family: &#39;Courier New&#39;;">{&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0&nbsp;}&nbsp;};</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">例如，对下图A点，如果放白子，在四个方向分别会形成活3、活2、眠2，形成两种棋型（组合棋型）活3和活2眠2，最高分为活3对应的</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">200分，再加上位置分值6分，就是206分；如果放黑子，同理是25分。因此，当要在J9落下白子时，可获得攻击分206，防守分25，综合分231。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><img alt="" height="158" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/ff338dfd-67c6-3a83-bf98-0c9fcba7d210.png" width="158"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img alt="" height="155" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/88c42f30-1880-3a1c-9387-38569d2f122a.png" width="199"></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">四、棋局估值函数</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">函数描述：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">有了落子估值方式后，可以针对某一棋局，分析一定棋盘范围内的各个可落子点的落子估值，将最大综合分作为该棋局的估值。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">简单智能:</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">利用估值函数，即可实现简单智能，即只考虑当前局面下的最佳落子点，并落子。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">例如，人机对战：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><img alt="" height="261" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/4ef1f1d6-34e4-3a90-be35-8fdae1670824.png" width="311"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">优点是速度快，眼前胜利绝不放过，缺点也是显而易见的，对于埋伏了多步的杀法，这种只顾“近忧”的智能无能为力。因此，就需要搜索算法增加“远虑”。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">五、搜索算法</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">极大极小搜索：</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">分析：</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">要想得更远的，</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">棋子落在哪里最好？</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>1.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在对弈中</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，可利用棋局估值函数</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">对任何一个局面</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">进行估值，</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">估值越大表明对</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">当前玩家</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">越有利，估分越小则表明越不利</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>2.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">选择落子时，要考虑对自己第一步越有利的，对对手下一步越不利的，对自己第二步越有利的，以此类推；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>3.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">这样选择落子时就表现为一棵极大极小搜索树，逐层搜索，对自己轮的层就选最大值的局面，对对手轮就选最小值的局面，直到一定深度。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">但测试后发现该算法速度比较慢，对15×15的棋盘，搜索第一层有15×15=225个结点，第二层就约有15×15×15×15=50625个节点，完全是指数爆炸。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">α-β剪枝算法</span><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">:</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在搜索的过程中，实际上</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">有</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">搜索很多点是多余的</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">。</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">经过α-β剪枝，可以极大的减少搜索的数量</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">。在查阅资料的过程中，发现α-β剪枝算法是一个基础而经典的算法，还有很多</span><span><a href="http://www.cnblogs.com/speeding/archive/2012/09/20/2694704.html"><span class="15" style="color: #0000ff; text-decoration: underline; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">风格</span></a></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">、很多</span><span><a href="http://www.xqbase.com/computer/stepbystep3.htm"><span class="15" style="color: #0000ff; text-decoration: underline; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">变式</span></a></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，值得深入学习。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://blog.csdn.net/allenlsy/article/details/5324441"><span class="15" style="color: #0000ff; text-decoration: underline; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">伪代码</span></a></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（建立</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在MinMax算法基础上）：</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">alpha-beta(player,board,alpha,beta)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;if(game&nbsp;over&nbsp;in&nbsp;current&nbsp;board&nbsp;position)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;winner</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;children&nbsp;=&nbsp;all&nbsp;legal&nbsp;moves&nbsp;for&nbsp;player&nbsp;from&nbsp;this&nbsp;board</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;if(max's&nbsp;turn)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;each&nbsp;child</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score&nbsp;=&nbsp;alpha-beta(other&nbsp;player,child,alpha,beta)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-style: italic; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">(we&nbsp;have&nbsp;found&nbsp;a&nbsp;better&nbsp;best&nbsp;move....)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;score&nbsp;&gt;&nbsp;alpha&nbsp;then&nbsp;alpha&nbsp;=&nbsp;score&nbsp;</span><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-weight: bold; font-style: italic; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">(cut&nbsp;off...)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">if&nbsp;alpha&nbsp;&gt;=&nbsp;beta&nbsp;then&nbsp;return&nbsp;alpha</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;alpha&nbsp;</span><span style="font-style: italic; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">(this&nbsp;is&nbsp;our&nbsp;best&nbsp;move)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;(min's&nbsp;turn)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;each&nbsp;child</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score&nbsp;=&nbsp;alpha-beta(other&nbsp;player,child,alpha,beta)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-style: italic; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">(opponent&nbsp;has&nbsp;found&nbsp;a&nbsp;better&nbsp;worse&nbsp;move.....)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;score&nbsp;&lt;&nbsp;beta&nbsp;then&nbsp;beta&nbsp;=&nbsp;score</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-weight: bold; font-style: italic; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">(cut&nbsp;off....)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">if&nbsp;alpha&nbsp;&gt;=&nbsp;beta&nbsp;then&nbsp;return&nbsp;beta</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;beta&nbsp;</span><span style="font-style: italic; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">(this&nbsp;is&nbsp;the&nbsp;opponent's&nbsp;best&nbsp;move)</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">以上述伪代码为原型，我尝试实现五子棋AI的α-β剪枝算法。但是试验后发现该原型还有很多不足，比如速率仍然不快，尤其是开局落子时，比如经常忽视近层的绝杀，还需根据五子棋的特点继续优化算法。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">六、算法优化</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">速率提高：</span></p>
+<p class="p0"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>1.<span>&nbsp;</span></span></span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">限制落子范围：</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在当前棋局的所有棋子的最左、最右、最上、最下点的5格之内，不超过棋盘边界。</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">这样在棋子较少的时候，搜索</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">结点</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">的数量大大减少。</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>2.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">减少每层的搜索结点：在一方落子后，程序自动对新棋局下的可落子点进行落子估值，保存估值前几名的落子点，在拓展搜索树时，只考虑这些落子点作为新层结点，并进行下一步搜索，大大减少搜索范围。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">近层绝杀：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">在递归过程中，如果发现某落子后可能形成</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">、双冲</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">、冲</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">3这些对方无法防守的棋局，则将该落子点的估分人为设成一个无穷大值，即优先这种走法。同时，如果己方和对方同时出现</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">、双冲</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">、冲</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">4</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">活</span><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">3的棋局，则以己方的攻击为先。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="color: #000000; font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">综上，最后的</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">α-β</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">算法代码如下（</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">更多详细内容，可见源代码的注解</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">）：</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<div class="dp-highlighter" id=""><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=public%20int%20alpha_beta(int%20depth%2C%20Board%20board%2C%20int%20alpha%2C%20int%20beta)%20%7B%0A%0Aif%20(depth%20%3D%3D%20level%20%7C%7C%20board.isGameOver()%20!%3D%200)%20%7B%0A%0AChess%5B%5D%20sorted%20%3D%20board.getSorted()%3B%0A%0AChess%20move%20%3D%20board.getData()%5Bsorted%5B0%5D.x%5D%5Bsorted%5B0%5D.y%5D%3B%0A%0Areturn%20move.getSum()%3B%2F%2F%20%E5%B1%80%E9%9D%A2%E4%BC%B0%E5%88%86%0A%0A%7D%0A%0ABoard%20temp%20%3D%20new%20Board(board)%3B%0A%0AChess%5B%5D%20sorted%20%3D%20temp.getSorted()%3B%0A%0Aint%20score%3B%0A%0Afor%20(int%20i%20%3D%200%3B%20i%20%3C%20node%3B%20i%2B%2B)%20%7B%0A%0Aint%20x%20%3D%20sorted%5Bi%5D.x%3B%0A%0Aint%20y%20%3D%20sorted%5Bi%5D.y%3B%0A%0Aif%20(!temp.putChess(x%2C%20y))%0A%0Acontinue%3B%0A%0Aif%20(sorted%5Bi%5D.getOffense()%20%3E%3D%20Board.Level.ALIVE_4.score)%20%7B%0A%0Ascore%20%3D%20INFINITY%20%2B%201%3B%0A%0A%7D%20else%20if%20(sorted%5Bi%5D.getDefence()%20%3E%3D%20Board.Level.ALIVE_4.score)%20%7B%0A%0Ascore%20%3D%20INFINITY%3B%0A%0A%7D%20else%20%7B%0A%0Ascore%20%3D%20alpha_beta(depth%20%2B%201%2C%20temp%2C%20alpha%2C%20beta)%3B%0A%0A%7D%0A%0Atemp%20%3D%20new%20Board(board)%3B%0A%0Aif%20(depth%20%25%202%20%3D%3D%200)%20%7B%2F%2F%20MAX%0A%0Aif%20(score%20%3E%20alpha)%20%7B%0A%0Aalpha%20%3D%20score%3B%0A%0Aif%20(depth%20%3D%3D%200)%20%7B%0A%0Amovex%20%3D%20x%3B%0A%0Amovey%20%3D%20y%3B%0A%0A%7D%0A%0A%7D%0A%0Aif%20(alpha%20%3E%3D%20beta)%20%0A%0Areturn%20alpha%3B%0A%0A%7D%20else%20%7B%2F%2F%20MIN%0A%0Aif%20(score%20%3C%20beta)%20%0A%0Abeta%20%3D%20score%3B%0A%0Aif%20(alpha%20%3E%3D%20beta)%20%0A%0Areturn%20beta%3B%0A%0A%7D%0A%0A%7D%0A%0Areturn%20depth%252%3D%3D0%3Falpha%3Abeta%3B%0A%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/icon_star.png" alt="收藏代码"><img class="spinner" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/spinner.gif" style="display:none"></a></div></div><ol start="1" class="dp-j"><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;alpha_beta(</span><span class="keyword">int</span><span>&nbsp;depth,&nbsp;Board&nbsp;board,&nbsp;</span><span class="keyword">int</span><span>&nbsp;alpha,&nbsp;</span><span class="keyword">int</span><span>&nbsp;beta)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(depth&nbsp;==&nbsp;level&nbsp;||&nbsp;board.isGameOver()&nbsp;!=&nbsp;</span><span class="number">0</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>Chess[]&nbsp;sorted&nbsp;=&nbsp;board.getSorted();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>Chess&nbsp;move&nbsp;=&nbsp;board.getData()[sorted[<span class="number">0</span><span>].x][sorted[</span><span class="number">0</span><span>].y];&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">return</span><span>&nbsp;move.getSum();</span><span class="comment">//&nbsp;局面估分</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>Board&nbsp;temp&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;Board(board);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>Chess[]&nbsp;sorted&nbsp;=&nbsp;temp.getSorted();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">int</span><span>&nbsp;score;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">int</span><span>&nbsp;i&nbsp;=&nbsp;</span><span class="number">0</span><span>;&nbsp;i&nbsp;&lt;&nbsp;node;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">int</span><span>&nbsp;x&nbsp;=&nbsp;sorted[i].x;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">int</span><span>&nbsp;y&nbsp;=&nbsp;sorted[i].y;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(!temp.putChess(x,&nbsp;y))&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">continue</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(sorted[i].getOffense()&nbsp;&gt;=&nbsp;Board.Level.ALIVE_4.score)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>score&nbsp;=&nbsp;INFINITY&nbsp;+&nbsp;<span class="number">1</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;<span class="keyword">else</span><span>&nbsp;</span><span class="keyword">if</span><span>&nbsp;(sorted[i].getDefence()&nbsp;&gt;=&nbsp;Board.Level.ALIVE_4.score)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>score&nbsp;=&nbsp;INFINITY;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;<span class="keyword">else</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>score&nbsp;=&nbsp;alpha_beta(depth&nbsp;+&nbsp;<span class="number">1</span><span>,&nbsp;temp,&nbsp;alpha,&nbsp;beta);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>temp&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;Board(board);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(depth&nbsp;%&nbsp;</span><span class="number">2</span><span>&nbsp;==&nbsp;</span><span class="number">0</span><span>)&nbsp;{</span><span class="comment">//&nbsp;MAX</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(score&nbsp;&gt;&nbsp;alpha)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>alpha&nbsp;=&nbsp;score;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(depth&nbsp;==&nbsp;</span><span class="number">0</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>movex&nbsp;=&nbsp;x;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>movey&nbsp;=&nbsp;y;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(alpha&nbsp;&gt;=&nbsp;beta)&nbsp;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">return</span><span>&nbsp;alpha;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;<span class="keyword">else</span><span>&nbsp;{</span><span class="comment">//&nbsp;MIN</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(score&nbsp;&lt;&nbsp;beta)&nbsp;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>beta&nbsp;=&nbsp;score;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">if</span><span>&nbsp;(alpha&nbsp;&gt;=&nbsp;beta)&nbsp;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">return</span><span>&nbsp;beta;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">return</span><span>&nbsp;depth%</span><span class="number">2</span><span>==</span><span class="number">0</span><span>?alpha:beta;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" codeable_id="" codeable_type="BlogComment" source_url="http://zjh776.iteye.com/blog/1979748#" pre_index="0" title="基于α-β剪枝算法的智能五子棋" data-filtered="filtered" style="display: none;">public int alpha_beta(int depth, Board board, int alpha, int beta) {
+
+if (depth == level || board.isGameOver() != 0) {
+
+Chess[] sorted = board.getSorted();
+
+Chess move = board.getData()[sorted[0].x][sorted[0].y];
+
+return move.getSum();// 局面估分
+
+}
+
+Board temp = new Board(board);
+
+Chess[] sorted = temp.getSorted();
+
+int score;
+
+for (int i = 0; i &lt; node; i++) {
+
+int x = sorted[i].x;
+
+int y = sorted[i].y;
+
+if (!temp.putChess(x, y))
+
+continue;
+
+if (sorted[i].getOffense() &gt;= Board.Level.ALIVE_4.score) {
+
+score = INFINITY + 1;
+
+} else if (sorted[i].getDefence() &gt;= Board.Level.ALIVE_4.score) {
+
+score = INFINITY;
+
+} else {
+
+score = alpha_beta(depth + 1, temp, alpha, beta);
+
+}
+
+temp = new Board(board);
+
+if (depth % 2 == 0) {// MAX
+
+if (score &gt; alpha) {
+
+alpha = score;
+
+if (depth == 0) {
+
+movex = x;
+
+movey = y;
+
+}
+
+}
+
+if (alpha &gt;= beta) 
+
+return alpha;
+
+} else {// MIN
+
+if (score &lt; beta) 
+
+beta = score;
+
+if (alpha &gt;= beta) 
+
+return beta;
+
+}
+
+}
+
+return depth%2==0?alpha:beta;
+
+}</pre>
+<p>&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-size: 9.0000pt; font-family: &#39;Courier New&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">例如，深度为</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">2，每层5个结点，H8黑、I7白后考虑落下黑子，依次拓展落子估值前5大的点G7、H7、I9、I8、H6，根据深度优先搜索，先假设落下G7黑，则再次拓展5个结点</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">I9、F6、J10、E5、K11，其中落子I9白（即共四子）后的棋局（I8是该棋局的最大落子估值点）估值为233，以此类推。根据剪枝原理，最后可得最佳落子点。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><img alt="" height="431" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/d651a605-bbf4-3d77-a131-42f5ee220537.png" width="485"><span style="font-size: 10.5000pt; font-family: &#39;Calibri&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="color: #000000; font-size: 9.0000pt; font-family: &#39;Courier New&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;">&nbsp;</p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">更多优化的思考：</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>1.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">考虑利用多线程，让算法实现并行计算，每个线程负责不同子树</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，可提高速率</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>2.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">落子的影响范围有限，搜索过程中很多点的估值并没有改变，可以考虑把一些点的估值记录下来，以后只要遇到搜索到的节点，就可以直接得到结果</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，可提高速率</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">；</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>3.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">由于算法的固定性，所以一担玩家一次获胜，按照相同的走法，必然会再次获胜</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">。</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">但除了必杀招或者必防招</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">一个局面很多时候没有绝对最好的走法</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">而是有一些都不错的走法</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">。考虑</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">把这些评分差不多走法汇集起来</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">然后随机选择它们中的一种走法</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">，</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">避免走法的固定</span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">。</span></p>
+<p class="p0"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;"><span>4.<span>&nbsp;</span></span></span><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">可利用神经网络思想来提高速率，存储结点信息，增加学习功能，避免再次犯错。</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt; text-align: justify;"><span style="font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;"><span>七、</span></span><span style="font-weight: bold; font-size: 18.0000pt; font-family: &#39;宋体&#39;;">结语</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">感悟：</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">花了约一周的时间，网上并没有满意的源码参考来作为基础，基本都是自己完成的，挺有成就感，但是也误了时间，非常抱歉！</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">整个过程中有几个坎，一是资料混乱，棋型很难确定，二是得弄清楚落子估值和棋局估值函数的联系和区别，这个没有找到明确描述的资料，是我自己分析猜测的，三是写完</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">α-β</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">算法不是万事大吉，要做个高智商的</span><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">AI还很有欠缺。</span></p>
+<p class="p0" style="text-indent: 21.0000pt; margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: bold; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">参考：</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（界面设计）</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://slab.sinaapp.com/gomoku/"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://slab.sinaapp.com/gomoku/</span></a></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（基本棋型、专业术语）</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://www.rifchina.com/Article/ShowArticle.asp?ArticleID=1038"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://www.rifchina.com/Article/ShowArticle.asp?ArticleID=1038</span></a></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://www.rifchina.com/Article/ShowArticle.asp?ArticleID=1038"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://www.rifchina.com/Article/ShowArticle.asp?ArticleID=1038</span></a></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（α-β剪枝算法）</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><a href="http://www.cnblogs.com/Blog_SivenZhang/archive/2010/06/13/1757677.html"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://www.cnblogs.com/Blog_SivenZhang/archive/2010/06/13/1757677.html</span></a></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://www.cnblogs.com/speeding/archive/2012/09/20/2694704.html"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://www.cnblogs.com/speeding/archive/2012/09/20/2694704.html</span></a></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://blog.csdn.net/allenlsy/article/details/5324441"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://blog.csdn.net/allenlsy/article/details/5324441</span></a></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://www.xqbase.com/computer/stepbystep3.htm"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://www.xqbase.com/computer/stepbystep3.htm</span></a></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span><a href="http://blog.sina.com.cn/s/blog_5d9ee55e0100uuy2.html"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">http://blog.sina.com.cn/s/blog_5d9ee55e0100uuy2.html</span></a></span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">（相关论文）</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">唐永强,汪波.基于神经网络思想及α-β方法的五子棋算法设计.《电脑应用技术》二零零九总第七十二期</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">简越.基于UML的五子棋人机对弈.本科毕业论文</span></p>
+<p class="p0" style="margin-bottom: 0pt; margin-top: 0pt;"><span style="font-weight: normal; font-size: 10.5000pt; font-family: &#39;宋体&#39;;">&nbsp;</span></p>
+<p>&nbsp;</p>
+</div>
+  </div>
+
+  
+  <div class="attachments">
+    
+      
+        <ul style="display:none;">
+          <li><a href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/61aebe80-3742-328d-9839-20e052c8c34b.png" target="_blank"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/61aebe80-3742-328d-9839-20e052c8c34b-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 56.7 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/ff338dfd-67c6-3a83-bf98-0c9fcba7d210.png" target="_blank"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/ff338dfd-67c6-3a83-bf98-0c9fcba7d210-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 3.6 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/88c42f30-1880-3a1c-9387-38569d2f122a.png" target="_blank"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/88c42f30-1880-3a1c-9387-38569d2f122a-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 1.7 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/4ef1f1d6-34e4-3a90-be35-8fdae1670824.png" target="_blank"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/4ef1f1d6-34e4-3a90-be35-8fdae1670824-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 7.7 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/d651a605-bbf4-3d77-a131-42f5ee220537.png" target="_blank"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/d651a605-bbf4-3d77-a131-42f5ee220537-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 58.3 KB</li>
+        </ul>
+      
+    
+    
+      <ul>
+        <li><a href="http://zjh776.iteye.com/blog/1979748#" onclick="$$(&#39;div.attachments ul&#39;).invoke(&#39;show&#39;);$(this).up(1).hide();return false;">查看图片附件</a></li>
+      </ul>
+    
+  </div>
+
+
+  
+      <script type="text/javascript"><!--
+      google_ad_client = "ca-pub-8990951720398508";
+      /* iteye博客内页Banner-728*90 */
+      google_ad_slot = "8267689356/1918544322";
+      google_ad_width = 728;
+      google_ad_height = 90;
+      //-->
+      </script>
+      <script type="text/javascript" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/show_ads.js">
+      </script><iframe src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/x.html" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="width:350px;height:250px"></iframe>
+  
+
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="http://zjh776.iteye.com/blog/2008669" class="next" title="数据的批量解压7z、处理sed、导入bcp">数据的批量解压7z、处理sed、导入bcp</a>
+      |
+      <a href="http://zjh776.iteye.com/blog/1973086" class="pre" title="利用Satistics Toolbox分类">利用Satistics Toolbox分类</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2013-11-23 13:53</li>
+      <li>浏览 7888</li>
+      <li><a href="http://zjh776.iteye.com/blog/1979748#comments">评论(1)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class="last"><a href="http://www.iteye.com/wiki/blog/1979748" target="_blank" class="more">相关推荐</a></li>
+    </ul>    
+  </div>
+  
+		    
+		
+<div class="boutique-curr-box blog_comment">
+	  <div class="boutique-curr clearfix">
+	    <h5 class="h3titles">参考知识库</h5>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/ai"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/1479972981201_201.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/ai" classs="title">人工智能基础知识库</a>
+              <span>
+                 <em>15784</em>&nbsp;&nbsp;关注 <i>|</i> <em>212</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/aiplanning"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/1490871291906_906.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/aiplanning" classs="title">人工智能规划与决策知识库</a>
+              <span>
+                 <em>1371</em>&nbsp;&nbsp;关注 <i>|</i> <em>23</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/aimachinelearning"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/1490775139619_619.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/aimachinelearning" classs="title">人工智能机器学习知识库</a>
+              <span>
+                 <em>1767</em>&nbsp;&nbsp;关注 <i>|</i> <em>346</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/aiframework"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/1490854772656_656.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/aiframework" classs="title">人工智能开发框架知识库</a>
+              <span>
+                 <em>766</em>&nbsp;&nbsp;关注 <i>|</i> <em>565</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/machinelearning"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/1490757082721_721.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/machinelearning" classs="title">机器学习知识库</a>
+              <span>
+                 <em>19204</em>&nbsp;&nbsp;关注 <i>|</i> <em>2193</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/autonomous"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/1490788070692_692.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/autonomous" classs="title">无人驾驶知识库</a>
+              <span>
+                 <em>681</em>&nbsp;&nbsp;关注 <i>|</i> <em>24</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A"><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/1490880037666_666.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A" classs="title">计算广告知识库</a>
+              <span>
+                 <em>132</em>&nbsp;&nbsp;关注 <i>|</i> <em>24</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	  </div>
+</div>
+ 		
+      
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2395694">
+  <div class="comment_title">
+    1 楼
+    <a href="http://yshu.iteye.com/" target="_blank" title="yShu">yShu</a>
+    2016-12-16&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">楼主有代码吗？</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="http://zjh776.iteye.com/login" style="background-color:white;"> <img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="http://zjh776.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1979748;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', '基于α-β剪枝算法的智能五子棋');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', '基于α-β剪枝算法的智能五子棋');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="http://zjh776.iteye.com/"><img alt="zjh776的博客" class="logo" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/64091437-ec5d-31ce-b328-286462284ffa.gif" title="zjh776的博客: 怒减20斤" width=""></a></div>
+  <div id="blog_owner_name">zjh776</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 28016 次</li>
+              
+              
+              <li><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/offline.gif"></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;"><a href="http://zjh776.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://lionunderthestars.iteye.com/" target="_blank"><img alt="星空下的狮子的博客" class="logo" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/user-logo-thumb.gif" title="星空下的狮子的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://lionunderthestars.iteye.com/" target="_blank" title="星空下的狮子">星空下的狮子</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://vagrantvv.iteye.com/" target="_blank"><img alt="vagrantvv的博客" class="logo" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/user-logo-thumb.gif" title="vagrantvv的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://vagrantvv.iteye.com/" target="_blank" title="vagrantvv">vagrantvv</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://chtzsa.iteye.com/" target="_blank"><img alt="CHTZSA的博客" class="logo" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/user-logo-thumb.gif" title="CHTZSA的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://chtzsa.iteye.com/" target="_blank" title="CHTZSA">CHTZSA</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://yshu.iteye.com/" target="_blank"><img alt="yShu的博客" class="logo" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/user-logo-thumb.gif" title="yShu的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://yshu.iteye.com/" target="_blank" title="yShu">yShu</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="http://zjh776.iteye.com/">全部博客 (26)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/230203">Android (4)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/245851">MySQL (4)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/250191">Linux (2)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/287164">J2EE (4)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/287165">.Net (1)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/287166">其他 (5)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/292759">ACM (1)</a></li>
+                
+                  <li><a href="http://zjh776.iteye.com/category/296956">Matlab (3)</a></li>
+                
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="http://zjh776.iteye.com/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="http://zjh776.iteye.com/blog/post">我的论坛</a> (0)
+                </li>
+                <li><a href="http://zjh776.iteye.com/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="http://zjh776.iteye.com/blog/monthblog/2014-08">2014-08</a> (1)</li>
+                
+                  <li><a href="http://zjh776.iteye.com/blog/monthblog/2014-02">2014-02</a> (2)</li>
+                
+                  <li><a href="http://zjh776.iteye.com/blog/monthblog/2014-01">2014-01</a> (1)</li>
+                
+                <li><a href="http://zjh776.iteye.com/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href="http://yshu.iteye.com/" target="_blank" title="yShu">yShu</a>： 
+                  楼主有代码吗？<br>
+                  <a href="http://zjh776.iteye.com/blog/1979748#bc2395694">基于α-β剪枝算法的智能五子棋</a>
+                </li>
+                
+                <li>
+                  <a href="http://engineerluo.iteye.com/" target="_blank" title="engineerluo">engineerluo</a>： 
+                   顶一个<br>
+                  <a href="http://zjh776.iteye.com/blog/2020704#bc2348067">ThinkPHP+SAE七七八八</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+        <div style="margin-top: 10px;float: left;clear: left;">
+          <script type="text/javascript">
+            /*iteye博客内页左侧Button-200*200，创建于2016-08-01*/
+            var cpro_id = "u2720202";
+          </script>
+          <script type="text/javascript" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/c.js"></script><div id="BAIDU_SSP__wrapper_u2720202_0"><iframe id="iframeu2720202_0" name="iframeu2720202_0" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/tclm(1).html" width="200" height="200" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0;vertical-align:bottom;margin:0;width:200px;height:200px" allowtransparency="true"></iframe></div>
+				</div>
+      </div>    
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br>
+          © 2003-2017 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+        <div style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000;">
+          <script type="text/javascript"><!--
+          google_ad_client = "ca-pub-8990951720398508";
+          /* iteye博客内页弹窗-300*250 */
+          google_ad_slot = "8267689356/5752063962";
+          google_ad_width = 300;
+          google_ad_height = 250;
+          //-->
+          </script>
+          <script type="text/javascript" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/show_ads.js">
+          </script><iframe src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/x(1).html" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="width:350px;height:250px"></iframe>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/saved_resource" width="0" height="0">
+
+<script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/tracking.js" type="text/javascript"></script>
+
+    
+    
+    <script language="javascript" type="text/javascript" src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/async_new.js"></script>
+<script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">var $csdn_iteye_jq = jQuery.noConflict();// 解决jq与prototype.js命名空间冲突的问题</script>
+<script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/tracking(1).js" type="text/javascript"></script>
+    
+	    
+	    <script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/web-storage-cache.min.js" type="text/javascript"></script>
+	    <script src="./基于α-β剪枝算法的智能五子棋 - 怒减20斤 - ITeye博客_files/replace.min.js" type="text/javascript"></script>
+    
+    
+  
+
+</body></html>
